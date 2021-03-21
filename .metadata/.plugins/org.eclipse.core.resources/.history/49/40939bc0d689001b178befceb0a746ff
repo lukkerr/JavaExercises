@@ -1,0 +1,9 @@
+package sorteio;
+import sorteio.Sorteio;
+
+public class Teste {
+	public static void main(String[] args) {
+		var teste = new Sorteio(50, 10, 15);
+		System.out.println(teste);
+	}
+}

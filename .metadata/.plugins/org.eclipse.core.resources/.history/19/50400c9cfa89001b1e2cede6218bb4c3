@@ -1,0 +1,20 @@
+package sorteio;
+import java.util.Scanner;
+
+public class Teste {
+	public static void main(String[] args) {
+//		Scanner input = new Scanner(System.in);
+//		
+//		System.out.print("Digite o total números: ");
+//		int n = input.nextInt();
+//		
+//		System.out.print("Digite o valor mínimo: ");
+//		int min = input.nextInt();
+//		
+//		System.out.print("Digite o valor maxíma: ");
+//		int max = input.nextInt();
+//		System.out.println("");
+//		
+//		new Sorteio(n, min, max);
+	}
+}

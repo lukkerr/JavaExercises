@@ -1,0 +1,12 @@
+package sorteio;
+import java.util.Scanner;
+
+public class Teste {
+	public static void main(String[] args) {
+		Scanner n = new Scanner("Digite a quantidade maxíma: ");
+		Scanner min = new Scanner("Digite o valor mínimo: ");
+		Scanner max = new Scanner("Digite o valor maxíma: ");
+		
+		new Sorteio(n, min, max);
+	}
+}
