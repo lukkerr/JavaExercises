@@ -11,56 +11,76 @@ public class Sorteio {
 	private int[] numeros;
 	
 	public static void main(String[] args) throws Exception {
+		
 		try (Scanner input = new Scanner(System.in)) {
-			System.out.print("Digite o total nÃºmeros: ");
+			System.out.print("Digite o total números: ");
 			int n = input.nextInt();
 			
-			System.out.print("Digite o valor mÃ­nimo: ");
+			System.out.print("Digite o valor mínimo: ");
 			int min = input.nextInt();
 				
-			System.out.print("Digite o valor maxÃ­ma: ");
+			System.out.print("Digite o valor maxíma: ");
 			int max = input.nextInt();
 			
 			System.out.println("");
-			new Sorteio(n, min, max);
+			new Sorteio(n, min, max);	
 		}
 		catch(Exception e) {
-			throw new Exception("Valor Digitado nÃ£o Ã© um NÃºmero");
+			System.out.println("Valor Digitado não é um Número.");
 		}
+		
 	}
 	
 	public Sorteio(int n, int min, int max) throws Exception {
 		
-//		if(n <= 0 || n >= 100)
-//			throw new Exception("Valor de N < 0 ou > 99");
+		try {
+			if(n <= 0 || n >= 100)
+				throw new ArithmeticException("Valor de N < 0 ou > 99.");
+			if(min <= 0 || max <= 0)
+				throw new ArithmeticException("Valor de Min ou Max <= 0.");
+			if(min > max)
+				throw new ArithmeticException("Valor de Min é maior que Max.");
+			if(n > (max-min + Math.abs(-1)) )
+				throw new ArithmeticException("Quantidade de números invalída para tamanho de range passado.");
 		
+			setN(n);
+			setMin(min);
+			setMax(max);
+			setNumeros(new int[n]);
 		
-		setN(n);
-		setMin(min);
-		setMax(max);
-		setNumeros(new int[n]);
+			gerarNumeros();
+			
+		} catch(ArithmeticException e) {
+			System.out.println(e);
+		}
 		
-		gerarNumeros();
 	}
 	
-	public void gerarNumeros() {
+	public void gerarNumeros() throws Exception {
 		while( !terminou() ) {
 			proximoNumero();
 			System.out.println( resultado(",") );
 		}
 	}
 	
-	public void proximoNumero() {
-		Random sorteio = new Random();
-		int maxValue = getMax() - getMin() + 1;
-		int sorteado = (int) sorteio.nextInt(maxValue) + getMin();
-		
-		boolean contains = IntStream.of(getNumeros()).anyMatch(x -> x == sorteado);
-		
-		if(contains)
-			proximoNumero();
-		else
-			getNumeros()[lastIndex()] = sorteado;
+	public void proximoNumero() throws Exception {
+		try {
+			if( terminou() )
+				throw new Exception("Sorteio já terminou");
+			
+			Random sorteio = new Random();
+			int maxValue = getMax() - getMin() + 1;
+			int sorteado = (int) sorteio.nextInt(maxValue) + getMin();
+			
+			boolean contains = IntStream.of(getNumeros()).anyMatch(x -> x == sorteado);
+			
+			if(contains)
+				proximoNumero();
+			else
+				getNumeros()[lastIndex()] = sorteado;
+		} catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 	
 	public boolean terminou() {
@@ -71,16 +91,24 @@ public class Sorteio {
 		return result;
 	}
 	
-	public String resultado(String padrao) {
-		String[] strArray = new String[lastIndex()];
-		int[] intArray = getNumerosValidos();
+	public String resultado(String padrao) throws Exception {
+		try {
+			if(padrao == null)
+				throw new Exception("Valor do padrão não pode ser NULL.");
+			
+			String[] strArray = new String[lastIndex()];
+			int[] intArray = getNumerosValidos();
+			
+			Arrays.sort(intArray);
+			
+			for(int i = 0; i < lastIndex(); i++)
+				strArray[i] =  String.valueOf(intArray[i]);
+			
+			return "[" + String.join(padrao, strArray) + "]";
 		
-		Arrays.sort(intArray);
-		
-		for(int i = 0; i < lastIndex(); i++)
-			strArray[i] =  String.valueOf(intArray[i]);
-		
-		return "[" + String.join(padrao, strArray) + "]";
+		} catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 	
 	public int lastIndex(){

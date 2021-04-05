@@ -1,3 +1,2 @@
-INDEX VERSION 1.131+/home/luciano/eclipse-workspace/.metadata/.plugins/org.eclipse.jdt.core
-2265279978.index
-232124570.index
+INDEX VERSION 1.131+C:\Users\lucia\eclipse-workspace\.metadata\.plugins\org.eclipse.jdt.core
+3304787850.index
