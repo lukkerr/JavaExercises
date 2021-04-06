@@ -13,6 +13,7 @@ public class Sorteio {
 	public static void main(String[] args) throws Exception {
 		
 		try (Scanner input = new Scanner(System.in)) {
+			
 			System.out.print("Digite o total números: ");
 			int n = input.nextInt();
 			
@@ -23,10 +24,13 @@ public class Sorteio {
 			int max = input.nextInt();
 			
 			System.out.println("");
-			new Sorteio(n, min, max);	
+			
+			Sorteio app = new Sorteio(n, min, max);
+			app.gerarNumeros();
+			
 		}
 		catch(Exception e) {
-			System.out.println("Valor Digitado não é um Número.");
+			System.out.println("\nValor Digitado não é um Número.");
 		}
 		
 	}
@@ -34,39 +38,43 @@ public class Sorteio {
 	public Sorteio(int n, int min, int max) throws Exception {
 		
 		try {
+		
 			if(n <= 0 || n >= 100)
-				throw new ArithmeticException("Valor de N < 0 ou > 99.");
+				throw new Exception("Valor de N < 0 ou > 99.");
+			
 			if(min <= 0 || max <= 0)
-				throw new ArithmeticException("Valor de Min ou Max <= 0.");
+				throw new Exception("Valor de Min ou Max <= 0.");
+			
 			if(min > max)
-				throw new ArithmeticException("Valor de Min é maior que Max.");
+				throw new Exception("Valor de Min é maior que Max.");
+			
 			if(n > (max-min + Math.abs(-1)) )
-				throw new ArithmeticException("Quantidade de números invalída para tamanho de range passado.");
+				throw new Exception("Quantidade de números invalída para tamanho de range passado.");
 		
 			setN(n);
 			setMin(min);
 			setMax(max);
 			setNumeros(new int[n]);
 		
-			gerarNumeros();
-			
-		} catch(ArithmeticException e) {
+		} catch(Exception e) {
 			System.out.println(e);
 		}
 		
 	}
 	
 	public void gerarNumeros() throws Exception {
+		
 		while( !terminou() ) {
 			proximoNumero();
 			System.out.println( resultado(",") );
 		}
+		
 	}
 	
 	public void proximoNumero() throws Exception {
 		try {
-			if( terminou() )
-				throw new Exception("Sorteio já terminou");
+//			if( terminou() )
+//				throw new Exception("Sorteio já terminou");
 			
 			Random sorteio = new Random();
 			int maxValue = getMax() - getMin() + 1;
@@ -78,6 +86,7 @@ public class Sorteio {
 				proximoNumero();
 			else
 				getNumeros()[lastIndex()] = sorteado;
+			
 		} catch(Exception e) {
 			System.out.println(e);
 		}
@@ -85,9 +94,9 @@ public class Sorteio {
 	
 	public boolean terminou() {
 		boolean result = false;
-		if(lastIndex() == getN()) {
+		if(lastIndex() == getN())
 			result = true;
-		}
+		
 		return result;
 	}
 	
@@ -102,12 +111,15 @@ public class Sorteio {
 			Arrays.sort(intArray);
 			
 			for(int i = 0; i < lastIndex(); i++)
-				strArray[i] =  String.valueOf(intArray[i]);
+				strArray[i] = String.valueOf(intArray[i]);
 			
 			return "[" + String.join(padrao, strArray) + "]";
 		
 		} catch(Exception e) {
+			
 			System.out.println(e);
+			return "";
+		
 		}
 	}
 	
@@ -120,6 +132,15 @@ public class Sorteio {
 			}
 		}
 		return last;
+	}
+	
+	public int[] getNumerosValidos() {
+		int[] newArray = new int[lastIndex()];
+		
+		for(int i = 0; i < lastIndex(); i++) {
+			newArray[i] = getNumeros()[i];
+		}
+		return newArray;
 	}
 	
 	public int getN() {
@@ -152,14 +173,5 @@ public class Sorteio {
 
 	public void setNumeros(int[] numeros) {
 		this.numeros = numeros;
-	}
-	
-	public int[] getNumerosValidos() {
-		int[] newArray = new int[lastIndex()];
-		
-		for(int i = 0; i < lastIndex(); i++) {
-			newArray[i] = getNumeros()[i];
-		}
-		return newArray;
 	}
 }
