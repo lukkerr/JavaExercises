@@ -13,7 +13,7 @@ public class Sorteio {
 	public static void main(String[] args) throws Exception {
 		
 		try (Scanner input = new Scanner(System.in)) {
-			
+		
 			System.out.print("Digite o total números: ");
 			int n = input.nextInt();
 			
@@ -23,13 +23,18 @@ public class Sorteio {
 			System.out.print("Digite o valor maxíma: ");
 			int max = input.nextInt();
 			
+			System.out.print("Digite o padrão a ser usado no resultado: ");
+			String padrao = input.next();
+			
 			System.out.println("");
 			
 			Sorteio app = new Sorteio(n, min, max);
 			app.gerarNumeros();
 			
-		}
-		catch(Exception e) {
+			String resultado = app.resultado(padrao);
+			System.out.println( resultado );
+		
+		} catch(Exception e) {
 			System.out.println("\nValor Digitado não é um Número.");
 		}
 		
@@ -40,7 +45,7 @@ public class Sorteio {
 		try {
 		
 			if(n <= 0 || n >= 100)
-				throw new Exception("Valor de N < 0 ou > 99.");
+				throw new Exception("Valor de N < 1 ou > 99.");
 			
 			if(min <= 0 || max <= 0)
 				throw new Exception("Valor de Min ou Max <= 0.");
@@ -66,15 +71,14 @@ public class Sorteio {
 		
 		while( !terminou() ) {
 			proximoNumero();
-			System.out.println( resultado(",") );
 		}
 		
 	}
 	
 	public void proximoNumero() throws Exception {
 		try {
-//			if( terminou() )
-//				throw new Exception("Sorteio já terminou");
+			if( terminou() )
+				throw new Exception("Sorteio já terminou");
 			
 			Random sorteio = new Random();
 			int maxValue = getMax() - getMin() + 1;
