@@ -1,3 +1,7 @@
+//ALUNO: EDUARDO HENRIQUE FIDELIS PORTO //
+//ALUNO: LUCIANO DE CARVALHO SOUZA FILHO//
+
+
 package sorteio;
 import java.util.Random;
 import java.util.Scanner;
